@@ -138,7 +138,6 @@ bool dfs(int ent_r, int ent_c,
     return false;
 }
 
-
 // ----------------------------------------------------------
 // MAIN PROGRAM (students add DFS calls and logic)
 // ----------------------------------------------------------
