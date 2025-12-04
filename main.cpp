@@ -117,39 +117,25 @@ void printPath(pair<int,int> exitcell,
 // STUDENTS IMPLEMENT DFS HERE
 // Add arguments, return type, and logic
 // ----------------------------------------------------------
-bool dfs(int ent_r, int ent_c, vector<vector<int>>& maze, vector<vector<bool>>& visited, vector<vector<int>>& parent_r, vector<vector<int>>& parent_c, int exit_r, int exit_c) {
+bool dfs(int ent_r, int ent_c,
+    vector<vector<int>>& maze,
+    vector<vector<bool>>& visited,
+    vector<vector<int>>& parent_r,
+    vector<vector<int>>& parent_c,
+    int exit_r, int exit_c) {
     visited[ent_r][ent_c] = true;
     if (ent_r == exit_r && ent_c == exit_c)
         return true;
-    bool found = false;
     for (int i = 0; i < 4; i++) {
-        int r, c;
-        if (i == 0) {
-            if (ent_r == 0) continue;
-            r = ent_r - 1;
-            c = ent_c;
-        }
-        else if (i == 1) {
-            if (ent_r == maze.size() - 1) continue;
-            r = ent_r + 1;
-            c = ent_c;
-        }
-        else if (i == 2) {
-            if (ent_c == 0) continue;
-            r = ent_r;
-            c = ent_c - 1;
-        }
-        else {
-            if (ent_c == maze[0].size() - 1) continue;
-            r = ent_r;
-            c = ent_c + 1;
-        }
-        if (maze[r][c] == 1 || visited[r][c] == true) continue;
+        int r = ent_r + dr[i];
+        int c = ent_c + dc[i];
+        if (!(0 <= r && r < maze.size() && 0 <= c && c < maze[0].size())) continue; // continue if tile is out of bounds
+        if (maze[r][c] == 1 || visited[r][c] == true) continue; // continue if tile is a wall or already visited
         parent_r[r][c] = ent_r;
         parent_c[r][c] = ent_c;
-        found = dfs(r, c, maze, visited, parent_r, parent_c, exit_r, exit_c) ? true : found;
+        if (dfs(r, c, maze, visited, parent_r, parent_c, exit_r, exit_c)) return true;
     }
-    return found;
+    return false;
 }
 
 
